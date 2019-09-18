@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorSplashDark">#000a12</color>
     <color name="colorSplashLogo">#ffffff</color>
+    <color name="colorButtonActive">#29434e</color>
+    <color name="colorButtonNotActive">#f5f5f5</color>
+    <color name="colorButtonActiveText">#fafafa</color>
 </resources>
