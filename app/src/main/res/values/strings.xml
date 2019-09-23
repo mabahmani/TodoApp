@@ -4,4 +4,6 @@
     <string name="no_internet_msg">مراحل عضویت و ورود به تودو نیازمند اتصال اینترنت است.</string>
     <string name="wifi">اینترنت Wi-Fi</string>
     <string name="mobile_data">اینترنت موبایل</string>
+    <string name="phone_number">شماره تلفن همراه</string>
+    <string name="get_auth_code">دریافت کد احراز هویت</string>
 </resources>

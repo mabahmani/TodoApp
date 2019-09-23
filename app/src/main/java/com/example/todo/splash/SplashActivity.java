@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.app.DialogCompat;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,9 @@ public class SplashActivity extends AppCompatActivity {
             dialog.setContentView(LayoutInflater.from(this).inflate(R.layout.dialoog_no_internet,null,false));
             dialog.show();
         }
+
+        Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+        startActivity(intent);
     }
 
     private boolean isNetworkConnected() {
