@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import com.example.todo.R;
+import com.example.todo.main.TodosActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
             dialog.show();
         }
 
-        Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+        Intent intent = new Intent(SplashActivity.this, TodosActivity.class);
         startActivity(intent);
     }
 

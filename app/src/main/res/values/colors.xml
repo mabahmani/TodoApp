@@ -8,4 +8,5 @@
     <color name="colorButtonActive">#29434e</color>
     <color name="colorButtonNotActive">#f5f5f5</color>
     <color name="colorButtonActiveText">#fafafa</color>
+    <color name="colorFabIcon">#102027</color>
 </resources>
