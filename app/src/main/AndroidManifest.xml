@@ -12,8 +12,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/LauncherAppTheme">
-        <activity android:name=".main.TodosActivity"></activity>
+        android:theme="@style/LauncherAppTheme"
+        android:name=".MainApplication"
+        >
+        <activity android:name=".main.TodosActivity"
+            android:theme="@style/TodoAppTheme"
+            />
         <activity
             android:name=".login.LoginActivity"
             android:theme="@style/LauncherAppTheme" />
