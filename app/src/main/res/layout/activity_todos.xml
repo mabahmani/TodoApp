@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -24,15 +25,43 @@
             android:textColor="@color/colorAccent"
             />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fresh_list_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/list_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:text="یک لیست تازه"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
+            />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fresh_list_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:lottie_fileName="fresh_start_animation.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todo_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/list_name"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:lottie_fileName="fresh_start_animation.json"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
@@ -40,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorAccent"
-        app:fabAlignmentMode="end"
+        app:fabAlignmentMode="center"
         app:navigationIcon="@drawable/ic_menu_black_24dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
