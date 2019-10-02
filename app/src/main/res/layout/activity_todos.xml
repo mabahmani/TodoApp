@@ -51,6 +51,7 @@
             app:lottie_fileName="fresh_start_animation.json"
             app:lottie_loop="true"
             app:lottie_autoPlay="true"
+            android:visibility="gone"
             />
 
         <androidx.recyclerview.widget.RecyclerView
