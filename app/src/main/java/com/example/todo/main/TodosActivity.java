@@ -59,6 +59,11 @@ public class TodosActivity extends AppCompatActivity {
             return true;
         }
 
+        if (item.getItemId() == android.R.id.home){
+            NavigationBottomSheetFragment navigationBottomSheetFragment = new NavigationBottomSheetFragment();
+            navigationBottomSheetFragment.show(getSupportFragmentManager(),null);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
