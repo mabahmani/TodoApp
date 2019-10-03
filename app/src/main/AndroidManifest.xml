@@ -17,6 +17,7 @@
         >
         <activity android:name=".main.TodosActivity"
             android:theme="@style/TodoAppTheme"
+            android:windowSoftInputMode="adjustNothing"
             />
         <activity
             android:name=".login.LoginActivity"

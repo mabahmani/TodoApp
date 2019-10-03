@@ -40,6 +40,7 @@
                 android:paddingBottom="20dp"
                 android:gravity="center_vertical"
                 android:src="@drawable/ic_check_black_24dp"
+                android:scaleType="center"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -77,6 +78,7 @@
                 android:paddingBottom="20dp"
                 android:src="@drawable/ic_check_black_24dp"
                 android:visibility="invisible"
+                android:scaleType="center"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
