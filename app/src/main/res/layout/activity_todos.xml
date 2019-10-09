@@ -6,63 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".main.TodosActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/main_todo_frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/list_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:text="نام لیست"
-            fontPath="fonts/IRANSansMobile_Medium.ttf"
-            android:textSize="24sp"
-            android:textColor="@color/colorAccent"
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/fresh_list_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/list_name"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:text="یک لیست تازه"
-            android:textSize="18sp"
-            android:textColor="@color/colorAccent"
-            />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/fresh_list_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:lottie_fileName="fresh_start_animation.json"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
-            android:visibility="gone"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/todo_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/list_name"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
+        />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
