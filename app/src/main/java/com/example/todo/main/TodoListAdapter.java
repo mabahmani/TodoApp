@@ -23,6 +23,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    private static final int TYPE_COMPLETED = 2;
     private Context context;
     private List<TodoModel> todoModelList;
 
@@ -40,10 +41,18 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             View v = inflater.inflate(R.layout.row_todo_date, parent, false);
             ButterKnife.bind(v);
             return  new ViewHolderHeader(v);
-        } else {
+        }
+
+        else if (viewType == TYPE_ITEM){
             View v = inflater.inflate(R.layout.row_todo_list_sort_by_date, parent, false);
             ButterKnife.bind(v);
             return new ViewHolderItem(v);
+        }
+
+        else {
+            View v = inflater.inflate(R.layout.row_todo_completed, parent, false);
+            ButterKnife.bind(v);
+            return new ViewHolderCompleted(v);
         }
     }
 
@@ -73,6 +82,10 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 });
             }
+
+            else if (holder instanceof ViewHolderCompleted){
+                ViewHolderCompleted holderCompleted = (ViewHolderCompleted) holder;
+            }
     }
 
     @Override
@@ -84,6 +97,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
         if (todoModelList.get(position) instanceof DateModel)
             return TYPE_HEADER;
+        else if (todoModelList.get(position) instanceof CompletedTodoModel)
+            return TYPE_COMPLETED;
         else
             return TYPE_ITEM;
     }
@@ -107,6 +122,16 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         AppCompatCheckBox checkBox;
 
         public ViewHolderItem(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this,itemView);
+        }
+    }
+
+    public class ViewHolderCompleted extends RecyclerView.ViewHolder {
+        @BindView(R.id.todo_completed_list)
+        RecyclerView todoCompletedRv;
+
+        public ViewHolderCompleted(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }

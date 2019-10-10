@@ -6,6 +6,7 @@ public class TodoModel {
     private String task;
     private String subTask;
     private Date dueDate;
+    private boolean completed;
 
     public TodoModel() {
     }
@@ -32,5 +33,13 @@ public class TodoModel {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

@@ -46,12 +46,12 @@ public class TodosFragment extends Fragment {
 
         Date date = new Date();
 
-        for (int i=0; i<100; i++){
+        for (int i=0; i<20; i++){
             TodoModel todoModel = new TodoModel();
             todoModel.setTask("Task " + i);
             todoModel.setSubTask("SubTask " + i);
             Calendar calendar = Calendar.getInstance();
-            if (i%2==0){
+            if (i%6==0){
                 calendar.setTime(date);
                 calendar.add(Calendar.DAY_OF_YEAR, i);
                 date = calendar.getTime();
@@ -64,6 +64,9 @@ public class TodosFragment extends Fragment {
             todoModel.setDueDate(date);
             todoModels.add(todoModel);
         }
+
+        CompletedTodoModel completedTodoModel = new CompletedTodoModel();
+        todoModels.add(completedTodoModel);
 
         TodoListAdapter todoListAdapter = new TodoListAdapter(getContext(), todoModels);
         todoListRv.setLayoutManager(new LinearLayoutManager(getContext()));
