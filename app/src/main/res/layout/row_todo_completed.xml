@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="60dp"
+    >
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/completed_task"
-        fontPath="fonts/IRANSansMobile_Medium.ttf"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:paddingStart="60dp"
-        android:paddingTop="30dp"
-        android:paddingEnd="60dp"
-        android:text="انجام شده"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/expand_icon"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/header_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="30dp"
-        android:src="@drawable/ic_expand_more_black_24dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/todo_completed_list"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:paddingEnd="30dp"
+        android:paddingRight="30dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/expand_icon"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_expand_more_black_24dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/completed_task"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:text="انجام شده"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            fontPath="fonts/IRANSansMobile_Medium.ttf"
+            />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todo_completed_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/completed_task"
-        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/header_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"
+        />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/todo_completed_list"
+        android:background="@color/colorListDivider"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

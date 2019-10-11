@@ -43,6 +43,7 @@ public class TodosFragment extends Fragment {
     private void initList() {
 
         List<TodoModel> todoModels = new ArrayList<>();
+        List<TodoModel> completedeList = new ArrayList<>();
 
         Date date = new Date();
 
@@ -66,6 +67,12 @@ public class TodosFragment extends Fragment {
         }
 
         CompletedTodoModel completedTodoModel = new CompletedTodoModel();
+        for (int i=0; i<10; i++){
+            TodoModel todoModel = new TodoModel();
+            todoModel.setTask("Completed task " + i);
+            completedeList.add(todoModel);
+        }
+        completedTodoModel.setCompletedList(completedeList);
         todoModels.add(completedTodoModel);
 
         TodoListAdapter todoListAdapter = new TodoListAdapter(getContext(), todoModels);

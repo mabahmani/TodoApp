@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
@@ -85,6 +88,19 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             else if (holder instanceof ViewHolderCompleted){
                 ViewHolderCompleted holderCompleted = (ViewHolderCompleted) holder;
+                CompletedTodoModel completedTodoModel = (CompletedTodoModel) todoModelList.get(position);
+                CompletedTodoListAdapter completedTodoListAdapter = new CompletedTodoListAdapter(completedTodoModel.getCompletedList());
+                holderCompleted.todoCompletedRv.setLayoutManager(new LinearLayoutManager(context));
+                holderCompleted.todoCompletedRv.setAdapter(completedTodoListAdapter);
+                holderCompleted.todoCompletedRv.setVisibility(completedTodoModel.isExpanded() ? View.VISIBLE : View.GONE);
+
+                holderCompleted.parent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        completedTodoModel.setExpanded(!completedTodoModel.isExpanded());
+                        notifyItemChanged(position);
+                    }
+                });
             }
     }
 
@@ -130,6 +146,10 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class ViewHolderCompleted extends RecyclerView.ViewHolder {
         @BindView(R.id.todo_completed_list)
         RecyclerView todoCompletedRv;
+        @BindView(R.id.header_parent)
+        LinearLayout parent;
+        @BindView(R.id.parent)
+        ConstraintLayout mainParent;
 
         public ViewHolderCompleted(@NonNull View itemView) {
             super(itemView);
