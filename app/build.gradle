@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'com.github.samanzamani.persiandate:PersianDate:0.7'
 }

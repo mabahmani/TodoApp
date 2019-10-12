@@ -1,6 +1,8 @@
 package com.example.todo.main;
 
 import android.content.Context;
+import android.icu.util.ULocale;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,11 +19,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
+import com.example.todo.util.FaDigitsConverter;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import saman.zamani.persiandate.PersianDate;
+import saman.zamani.persiandate.PersianDateFormat;
 
 public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -59,6 +67,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof ViewHolderHeader){
@@ -66,9 +75,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 DateModel dateModel = (DateModel) todoModelList.get(position);
                 ViewHolderHeader holderHeader = (ViewHolderHeader) holder;
 
-                Log.d("aminListSize", todoModelList.size() + "");
-                if (dateModel.getDueDate() != null)
-                    holderHeader.date.setText(dateModel.getDueDate().toString());
+                PersianDateFormat persianDateFormat = new PersianDateFormat("l , j F");
+                PersianDate persianDate = new PersianDate(dateModel.getDueDate());
+                holderHeader.date.setText(FaDigitsConverter.convert(persianDateFormat.format(persianDate)));
             }
 
             else if (holder instanceof ViewHolderItem){
