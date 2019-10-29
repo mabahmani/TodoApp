@@ -43,7 +43,6 @@ public class AppExecutors {
 
     private final Executor mMainThread;
 
-    @Inject
     private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
         this.mDiskIO = diskIO;
         this.mNetworkIO = networkIO;

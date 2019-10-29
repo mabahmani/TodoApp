@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class TodoCategoryViewModel extends AndroidViewModel {
 
     @Inject
-    private TodoCategoryRepository todoCategoryRepository;
+    TodoCategoryRepository todoCategoryRepository;
 
     private LiveData<List<TodoCategoryEntity>> todoCategories;
 
