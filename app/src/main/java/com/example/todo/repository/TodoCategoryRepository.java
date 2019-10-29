@@ -23,19 +23,19 @@ public class TodoCategoryRepository {
         this.todoCategoryDao = todoCategoryDao;
     }
 
-    void insert(TodoCategoryEntity todoCategoryEntity){
+    public void insert(TodoCategoryEntity todoCategoryEntity){
         appExecutors.diskIO().execute(() -> todoCategoryDao.insert(todoCategoryEntity));
     }
 
-    void update(TodoCategoryEntity todoCategoryEntity){
+    public void update(TodoCategoryEntity todoCategoryEntity){
         appExecutors.diskIO().execute(() -> todoCategoryDao.update(todoCategoryEntity));
     }
 
-    void delete(TodoCategoryEntity todoCategoryEntity){
+    public void delete(TodoCategoryEntity todoCategoryEntity){
         appExecutors.diskIO().execute(() -> todoCategoryDao.delete(todoCategoryEntity));
     }
 
-    LiveData<List<TodoCategoryEntity>> getAllTodoCategory(){
+    public LiveData<List<TodoCategoryEntity>> getAllTodoCategory(){
         return todoCategoryDao.getAllCategories();
     }
 }

@@ -23,19 +23,19 @@ public class TodoRepository {
         this.todoDao = todoDao;
     }
 
-    void insert(TodoEntity todoEntity){
+    public void insert(TodoEntity todoEntity){
         appExecutors.diskIO().execute(() -> todoDao.insert(todoEntity));
     }
 
-    void update(TodoEntity todoEntity){
+    public void update(TodoEntity todoEntity){
         appExecutors.diskIO().execute(() -> todoDao.update(todoEntity));
     }
 
-    void delete(TodoEntity todoEntity){
+    public void delete(TodoEntity todoEntity){
         appExecutors.diskIO().execute(() -> todoDao.delete(todoEntity));
     }
 
-    LiveData<List<TodoEntity>> getCategoryTodos(int catId){
+    public LiveData<List<TodoEntity>> getCategoryTodos(int catId){
         return todoDao.getCategoryTodos(catId);
     }
 }
