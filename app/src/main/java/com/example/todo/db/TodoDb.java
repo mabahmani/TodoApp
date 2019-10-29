@@ -18,7 +18,7 @@ import com.example.todo.db.entity.TodoEntity;
 @TypeConverters(DateConverter.class)
 public abstract class TodoDb extends RoomDatabase {
 
-    abstract TodoDao todoDao();
+    public abstract TodoDao todoDao();
 
-    abstract TodoCategoryDao todoCategoryDao();
+    public abstract TodoCategoryDao todoCategoryDao();
 }
