@@ -6,4 +6,7 @@
     <string name="mobile_data">اینترنت موبایل</string>
     <string name="phone_number">شماره تلفن همراه</string>
     <string name="get_auth_code">دریافت کد احراز هویت</string>
+    <string name="create_new_list">ایجاد لیست جدید</string>
+    <string name="create">ساختن</string>
+    <string name="new_list_name">نام لیست جدید</string>
 </resources>

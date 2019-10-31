@@ -1,5 +1,6 @@
 package com.example.todo.main;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.TransitionManager;
@@ -10,9 +11,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.todo.R;
+import com.example.todo.addcategory.AddCategoryActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import butterknife.BindView;
@@ -26,8 +29,10 @@ public class NavigationBottomSheetFragment extends BottomSheetDialogFragment {
     ConstraintLayout manageAccountParent;
     @BindView(R.id.expand_icon)
     AppCompatImageView expandIcon;
+    @BindView(R.id.add_new_list)
+    AppCompatTextView createNewList;
 
-    private boolean exapnd = false;
+    private boolean expand = false;
 
     public NavigationBottomSheetFragment() {
     }
@@ -58,19 +63,27 @@ public class NavigationBottomSheetFragment extends BottomSheetDialogFragment {
                     TransitionManager.beginDelayedTransition(viewGroup);
                 }
 
-                manageAccountParent.setVisibility(exapnd ? View.GONE : View.VISIBLE);
+                manageAccountParent.setVisibility(expand ? View.GONE : View.VISIBLE);
 
-                if (exapnd){
+                if (expand){
                     expandIcon.setImageResource(R.drawable.ic_expand_more_black_24dp);
-                    exapnd = false;
+                    expand = false;
                 }
                 else {
                     expandIcon.setImageResource(R.drawable.ic_expand_less_black_24dp);
-                    exapnd = true;
+                    expand = true;
                 }
             }
 
 
+        });
+
+        createNewList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddCategoryActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }
