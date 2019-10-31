@@ -1,8 +1,9 @@
 package com.example.todo.di;
 
+import android.app.Application;
+
 import androidx.room.Room;
 
-import com.example.todo.MainApplication;
 import com.example.todo.R;
 import com.example.todo.db.TodoDb;
 import com.example.todo.db.dao.TodoCategoryDao;
@@ -19,7 +20,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    TodoDb provideDb(MainApplication application) {
+    TodoDb provideDb(Application application) {
         return Room.databaseBuilder(application, TodoDb.class, "todo.db")
                 .fallbackToDestructiveMigration()
                 .build();

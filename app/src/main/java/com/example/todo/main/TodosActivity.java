@@ -2,6 +2,7 @@ package com.example.todo.main;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -9,22 +10,28 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 
 import com.example.todo.R;
+import com.example.todo.db.entity.TodoCategoryEntity;
+import com.example.todo.viewmodel.TodoCategoryViewModel;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.DaggerAppCompatActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class TodosActivity extends AppCompatActivity {
+public class TodosActivity extends DaggerAppCompatActivity {
 
     @BindView(R.id.bottom_app_bar)
     BottomAppBar bottomAppBar;
@@ -32,6 +39,9 @@ public class TodosActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     @BindView(R.id.main_todo_frameLayout)
     FrameLayout frameLayout;
+
+    @Inject
+    TodoCategoryViewModel todoCategoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,13 @@ public class TodosActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_todo_frameLayout,new TodosFragment());
         transaction.commit();
+
+        todoCategoryViewModel.getAllCategories().observe(this, new Observer<List<TodoCategoryEntity>>() {
+            @Override
+            public void onChanged(List<TodoCategoryEntity> todoCategoryEntities) {
+                Log.d("AminSize", todoCategoryEntities.get(0).getCategoryName() + "");
+            }
+        });
     }
 
 

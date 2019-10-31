@@ -1,5 +1,6 @@
 package com.example.todo.di;
 
+import com.example.todo.addcategory.AddCategoryActivity;
 import com.example.todo.login.LoginActivity;
 import com.example.todo.login.LoginModule;
 import com.example.todo.main.TodosActivity;
@@ -24,5 +25,9 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = TodosModule.class)
     abstract TodosActivity todosActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector()
+    abstract AddCategoryActivity addCategoryActivity();
 
 }

@@ -10,8 +10,7 @@ public class TodoCategoryEntity {
     private int id;
     private String categoryName;
 
-    public TodoCategoryEntity(int id, String categoryName) {
-        this.id = id;
+    public TodoCategoryEntity(String categoryName) {
         this.categoryName = categoryName;
     }
 

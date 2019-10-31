@@ -15,14 +15,15 @@ import javax.inject.Inject;
 
 public class TodoCategoryViewModel extends AndroidViewModel {
 
-    @Inject
     TodoCategoryRepository todoCategoryRepository;
 
     private LiveData<List<TodoCategoryEntity>> todoCategories;
 
-    public TodoCategoryViewModel(@NonNull Application application) {
+    @Inject
+    public TodoCategoryViewModel(@NonNull Application application, TodoCategoryRepository todoCategoryRepository) {
         super(application);
-        todoCategories = todoCategoryRepository.getAllTodoCategory();
+        this.todoCategories = todoCategoryRepository.getAllTodoCategory();
+        this.todoCategoryRepository = todoCategoryRepository;
     }
 
     public LiveData<List<TodoCategoryEntity>> getAllCategories(){
