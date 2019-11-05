@@ -42,7 +42,8 @@ public class TodosActivity extends DaggerAppCompatActivity {
 
     @Inject
     TodoCategoryViewModel todoCategoryViewModel;
-
+    @Inject
+    NavigationBottomSheetFragment navigationBottomSheetFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,6 @@ public class TodosActivity extends DaggerAppCompatActivity {
         }
 
         if (item.getItemId() == android.R.id.home){
-            NavigationBottomSheetFragment navigationBottomSheetFragment = new NavigationBottomSheetFragment();
             navigationBottomSheetFragment.show(getSupportFragmentManager(),null);
         }
 

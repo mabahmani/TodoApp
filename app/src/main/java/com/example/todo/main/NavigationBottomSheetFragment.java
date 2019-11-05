@@ -13,10 +13,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
 import com.example.todo.addcategory.AddCategoryActivity;
+import com.example.todo.db.entity.TodoCategoryEntity;
+import com.example.todo.viewmodel.TodoCategoryViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,10 +40,18 @@ public class NavigationBottomSheetFragment extends BottomSheetDialogFragment {
     AppCompatImageView expandIcon;
     @BindView(R.id.add_new_list)
     AppCompatTextView createNewList;
+    @BindView(R.id.todo_category_list)
+    RecyclerView todoCategoryRecyclerView;
+
+    private TodoCategoryAdapter todoCategoryAdapter;
+
+    private TodoCategoryViewModel todoCategoryViewModel;
 
     private boolean expand = false;
 
-    public NavigationBottomSheetFragment() {
+    @Inject
+    public NavigationBottomSheetFragment(TodoCategoryViewModel todoCategoryViewModel) {
+        this.todoCategoryViewModel = todoCategoryViewModel;
     }
 
     @Override
@@ -54,6 +71,18 @@ public class NavigationBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        todoCategoryAdapter = new TodoCategoryAdapter();
+        todoCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        todoCategoryRecyclerView.setAdapter(todoCategoryAdapter);
+
+        todoCategoryViewModel.getAllCategories().observe(this, new Observer<List<TodoCategoryEntity>>() {
+            @Override
+            public void onChanged(List<TodoCategoryEntity> todoCategoryEntities) {
+                todoCategoryAdapter.setTodoCategoryList(todoCategoryEntities);
+            }
+        });
+
 
         ViewGroup viewGroup = (ViewGroup) view;
         accountParent.setOnClickListener(new View.OnClickListener() {
