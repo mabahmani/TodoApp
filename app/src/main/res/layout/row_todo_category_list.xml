@@ -16,6 +16,9 @@
         android:paddingStart="28dp"
         android:paddingEnd="28dp"
         android:text="کارهای من"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textDirection="rtl"
+        android:layoutDirection="rtl"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
