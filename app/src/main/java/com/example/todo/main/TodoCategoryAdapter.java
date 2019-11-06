@@ -1,5 +1,6 @@
 package com.example.todo.main;
 
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todo.MainApplication;
 import com.example.todo.R;
 import com.example.todo.db.entity.TodoCategoryEntity;
+import com.example.todo.util.SharedConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +24,11 @@ import butterknife.ButterKnife;
 public class TodoCategoryAdapter extends RecyclerView.Adapter<TodoCategoryAdapter.ViewHolder> {
 
     private List<TodoCategoryEntity> todoCategoryList;
+    private SharedPreferences sharedPreferences;
 
     public TodoCategoryAdapter() {
-        todoCategoryList = new ArrayList<>();
+        this.todoCategoryList = new ArrayList<>();
+        this.sharedPreferences = MainApplication.getSharedPreferences();
     }
 
     public void setTodoCategoryList(List<TodoCategoryEntity> todoCategoryList) {
@@ -41,6 +46,11 @@ public class TodoCategoryAdapter extends RecyclerView.Adapter<TodoCategoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        if (sharedPreferences.getLong(SharedConstants.ACTIVE_CATEGORY,-1) == todoCategoryList.get(position).getId()){
+            holder.parent.setBackgroundResource(R.color.colorActiveCategory);
+        }
+
         holder.categoryName.setText(todoCategoryList.get(position).getCategoryName());
     }
 

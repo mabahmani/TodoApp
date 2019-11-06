@@ -1,6 +1,7 @@
 package com.example.todo.repository;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.todo.AppExecutors;
 import com.example.todo.db.dao.TodoCategoryDao;
@@ -23,8 +24,12 @@ public class TodoCategoryRepository {
         this.todoCategoryDao = todoCategoryDao;
     }
 
-    public void insert(TodoCategoryEntity todoCategoryEntity){
-        appExecutors.diskIO().execute(() -> todoCategoryDao.insert(todoCategoryEntity));
+    public LiveData<Long> insert(TodoCategoryEntity todoCategoryEntity){
+
+        MutableLiveData<Long> mutableLiveData = new MutableLiveData<>();
+        appExecutors.diskIO().execute(() -> mutableLiveData.postValue(todoCategoryDao.insert(todoCategoryEntity)));
+
+        return mutableLiveData;
     }
 
     public void update(TodoCategoryEntity todoCategoryEntity){

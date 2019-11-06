@@ -11,4 +11,5 @@
     <color name="colorFabIcon">#102027</color>
     <color name="colorListDivider">#eceff1</color>
     <color name="colorTextButton">#00b0ff</color>
+    <color name="colorActiveCategory">#e1f5fe</color>
 </resources>

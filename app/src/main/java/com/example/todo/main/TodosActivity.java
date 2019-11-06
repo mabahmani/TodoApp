@@ -1,6 +1,7 @@
 package com.example.todo.main;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.todo.R;
 import com.example.todo.db.entity.TodoCategoryEntity;
+import com.example.todo.util.SharedConstants;
 import com.example.todo.viewmodel.TodoCategoryViewModel;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,17 +41,29 @@ public class TodosActivity extends DaggerAppCompatActivity {
     FloatingActionButton floatingActionButton;
     @BindView(R.id.main_todo_frameLayout)
     FrameLayout frameLayout;
-
+    @Inject
+    TodoCategoryEntity initialTodoCategory;
     @Inject
     TodoCategoryViewModel todoCategoryViewModel;
     @Inject
     NavigationBottomSheetFragment navigationBottomSheetFragment;
+    @Inject
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todos);
         ButterKnife.bind(this);
         setSupportActionBar(bottomAppBar);
+
+        if (sharedPreferences.getBoolean(SharedConstants.FIRST_START, true)) {
+            todoCategoryViewModel.insertCategory(initialTodoCategory).observe(this, rowId -> {
+                sharedPreferences.edit().putLong(SharedConstants.ACTIVE_CATEGORY, rowId).apply();
+                sharedPreferences.edit().putBoolean(SharedConstants.FIRST_START, false).apply();
+            });
+        }
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

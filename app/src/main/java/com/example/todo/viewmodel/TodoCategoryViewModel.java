@@ -30,8 +30,8 @@ public class TodoCategoryViewModel extends AndroidViewModel {
         return todoCategories;
     }
 
-    public void insertCategory(TodoCategoryEntity todoCategoryEntity){
-        todoCategoryRepository.insert(todoCategoryEntity);
+    public LiveData<Long> insertCategory(TodoCategoryEntity todoCategoryEntity){
+        return todoCategoryRepository.insert(todoCategoryEntity);
     }
 
     public void updateCategory(TodoCategoryEntity todoCategoryEntity){

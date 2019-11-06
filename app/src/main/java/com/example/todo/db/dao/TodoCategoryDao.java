@@ -16,7 +16,7 @@ import java.util.List;
 public interface TodoCategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(TodoCategoryEntity todoCategoryEntity);
+    Long insert(TodoCategoryEntity todoCategoryEntity);
 
     @Update
     void update(TodoCategoryEntity todoCategoryEntity);
