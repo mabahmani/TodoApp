@@ -27,4 +27,7 @@ public interface TodoCategoryDao {
     @Query("SELECT * FROM TodoCategoryEntity")
     LiveData<List<TodoCategoryEntity>> getAllCategories();
 
+    @Query("SELECT * FROM TodoCategoryEntity WHERE id=:catId")
+    LiveData<TodoCategoryEntity> getCategory(long catId);
+
 }

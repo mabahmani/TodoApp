@@ -43,4 +43,8 @@ public class TodoCategoryRepository {
     public LiveData<List<TodoCategoryEntity>> getAllTodoCategory(){
         return todoCategoryDao.getAllCategories();
     }
+
+    public LiveData<TodoCategoryEntity> getCategory(long catId){
+        return todoCategoryDao.getCategory(catId);
+    }
 }

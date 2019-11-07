@@ -1,5 +1,6 @@
 package com.example.todo.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,24 +8,38 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
+import com.example.todo.db.entity.TodoCategoryEntity;
+import com.example.todo.util.SharedConstants;
+import com.example.todo.viewmodel.TodoCategoryViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.DaggerFragment;
 
-public class TodosFragment extends Fragment {
+public class TodosFragment extends DaggerFragment {
 
     @BindView(R.id.todo_list)
     RecyclerView todoListRv;
+    @BindView(R.id.list_name)
+    AppCompatTextView listName;
+
+    @Inject
+    TodoCategoryViewModel todoCategoryViewModel;
+    @Inject
+    SharedPreferences sharedPreferences;
 
     @Nullable
     @Override
@@ -37,6 +52,14 @@ public class TodosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this,view);
+
+        todoCategoryViewModel.getCategory(sharedPreferences.getLong(SharedConstants.ACTIVE_CATEGORY,-1)).observe(this, new Observer<TodoCategoryEntity>() {
+            @Override
+            public void onChanged(TodoCategoryEntity todoCategoryEntity) {
+                listName.setText(todoCategoryEntity.getCategoryName());
+            }
+        });
+
         initList();
     }
 
