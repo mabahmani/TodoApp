@@ -112,6 +112,7 @@ public class NavigationBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddCategoryActivity.class);
                 startActivity(intent);
+                dismiss();
             }
         });
     }

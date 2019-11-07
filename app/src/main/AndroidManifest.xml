@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/LauncherAppTheme">
         <activity android:name=".addcategory.AddCategoryActivity"
-            android:theme="@style/TodoAppTheme"/>
+            android:theme="@style/TodoAppTheme"
+            android:windowSoftInputMode="stateAlwaysVisible"
+            />
         <activity
             android:name=".main.TodosActivity"
             android:theme="@style/TodoAppTheme"

@@ -3,9 +3,6 @@ package com.example.todo.di;
 import android.app.Application;
 
 import com.example.todo.MainApplication;
-import com.example.todo.login.LoginModule;
-import com.example.todo.main.TodosModule;
-import com.example.todo.splash.SplashModule;
 
 import javax.inject.Singleton;
 
@@ -17,13 +14,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {
         AndroidSupportInjectionModule.class,
-        AppModule.class,
         ActivityBindingModule.class,
         FragmentBindingModule.class,
-        ViewModelModule.class,
-        LoginModule.class,
-        TodosModule.class,
-        SplashModule.class
+        AppModule.class
 })
 public interface AppComponent extends AndroidInjector<MainApplication> {
 

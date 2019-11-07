@@ -1,6 +1,7 @@
 package com.example.todo.di;
 
 import com.example.todo.main.TodosFragment;
+import com.example.todo.main.TodosFragmentModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -9,6 +10,6 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class FragmentBindingModule {
 
     @FragmentScoped
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector(modules = TodosFragmentModule.class)
     abstract TodosFragment todosFragment();
 }

@@ -3,7 +3,6 @@ package com.example.todo.main;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,7 +11,6 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 
 import com.example.todo.R;
 import com.example.todo.db.entity.TodoCategoryEntity;
@@ -23,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -77,12 +74,6 @@ public class TodosActivity extends DaggerAppCompatActivity {
         transaction.replace(R.id.main_todo_frameLayout,new TodosFragment());
         transaction.commit();
 
-        todoCategoryViewModel.getAllCategories().observe(this, new Observer<List<TodoCategoryEntity>>() {
-            @Override
-            public void onChanged(List<TodoCategoryEntity> todoCategoryEntities) {
-                Log.d("AminSize", todoCategoryEntities.get(0).getCategoryName() + "");
-            }
-        });
     }
 
 

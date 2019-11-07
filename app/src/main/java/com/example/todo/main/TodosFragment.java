@@ -1,7 +1,7 @@
 package com.example.todo.main;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
 import com.example.todo.db.entity.TodoCategoryEntity;
-import com.example.todo.util.SharedConstants;
+import com.example.todo.util.sharedprefenceslivedata.SharedPreferenceLongLiveData;
 import com.example.todo.viewmodel.TodoCategoryViewModel;
 
 import java.util.ArrayList;
@@ -38,8 +39,10 @@ public class TodosFragment extends DaggerFragment {
 
     @Inject
     TodoCategoryViewModel todoCategoryViewModel;
+
     @Inject
-    SharedPreferences sharedPreferences;
+    SharedPreferenceLongLiveData sharedPreferenceLongLiveData;
+
 
     @Nullable
     @Override
@@ -53,10 +56,21 @@ public class TodosFragment extends DaggerFragment {
 
         ButterKnife.bind(this,view);
 
-        todoCategoryViewModel.getCategory(sharedPreferences.getLong(SharedConstants.ACTIVE_CATEGORY,-1)).observe(this, new Observer<TodoCategoryEntity>() {
+        sharedPreferenceLongLiveData.observe(this, new Observer<Long>() {
             @Override
-            public void onChanged(TodoCategoryEntity todoCategoryEntity) {
-                listName.setText(todoCategoryEntity.getCategoryName());
+            public void onChanged(Long aLong) {
+
+                Log.d("aminSHred","changed "+ aLong );
+
+                LiveData<TodoCategoryEntity> activeCategory = todoCategoryViewModel.getCategory(aLong);
+                activeCategory.observe(TodosFragment.this, new Observer<TodoCategoryEntity>() {
+                    @Override
+                    public void onChanged(TodoCategoryEntity todoCategoryEntity) {
+                        Log.d("aminSHred","changed "+ todoCategoryEntity.getCategoryName() );
+                        listName.setText(todoCategoryEntity.getCategoryName());
+                        activeCategory.removeObserver(this);
+                    }
+                });
             }
         });
 
@@ -66,7 +80,7 @@ public class TodosFragment extends DaggerFragment {
     private void initList() {
 
         List<TodoModel> todoModels = new ArrayList<>();
-        List<TodoModel> completedeList = new ArrayList<>();
+        List<TodoModel> completedList = new ArrayList<>();
 
         Date date = new Date();
 
@@ -93,9 +107,9 @@ public class TodosFragment extends DaggerFragment {
         for (int i=0; i<10; i++){
             TodoModel todoModel = new TodoModel();
             todoModel.setTask("Completed task " + i);
-            completedeList.add(todoModel);
+            completedList.add(todoModel);
         }
-        completedTodoModel.setCompletedList(completedeList);
+        completedTodoModel.setCompletedList(completedList);
         todoModels.add(completedTodoModel);
 
         TodoListAdapter todoListAdapter = new TodoListAdapter(getContext(), todoModels);
