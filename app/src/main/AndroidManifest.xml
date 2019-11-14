@@ -18,13 +18,8 @@
         <activity
             android:name=".main.TodosActivity"
             android:theme="@style/TodoAppTheme"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name=".login.LoginActivity"
-            android:theme="@style/LauncherAppTheme" />
-        <activity
-            android:name=".splash.SplashActivity"
-            android:theme="@style/LauncherAppTheme">
+            android:windowSoftInputMode="adjustNothing">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -40,6 +35,15 @@
                     android:pathPrefix="/gizmos"
                     android:scheme="http" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".login.LoginActivity"
+            android:theme="@style/LauncherAppTheme" />
+        <activity
+            android:name=".splash.SplashActivity"
+            android:theme="@style/LauncherAppTheme">
+
         </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

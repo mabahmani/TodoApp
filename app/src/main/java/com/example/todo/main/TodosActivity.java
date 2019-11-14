@@ -45,6 +45,8 @@ public class TodosActivity extends DaggerAppCompatActivity {
     @Inject
     NavigationBottomSheetFragment navigationBottomSheetFragment;
     @Inject
+    AddTodoBottomSheerFragment addTodoBottomSheerFragment;
+    @Inject
     SharedPreferences sharedPreferences;
 
     @Override
@@ -65,7 +67,6 @@ public class TodosActivity extends DaggerAppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddTodoBottomSheerFragment addTodoBottomSheerFragment = new AddTodoBottomSheerFragment();
                 addTodoBottomSheerFragment.show(getSupportFragmentManager(),null);
             }
         });

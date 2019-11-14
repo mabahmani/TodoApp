@@ -15,29 +15,25 @@ import javax.inject.Inject;
 
 public class TodoViewModel extends AndroidViewModel {
 
-    @Inject
     TodoRepository todoRepository;
 
-    private LiveData<List<TodoEntity>> todos;
-
-    public TodoViewModel(@NonNull Application application) {
+    @Inject
+    public TodoViewModel(@NonNull Application application, TodoRepository todoRepository) {
         super(application);
+        this.todoRepository = todoRepository;
     }
 
-    public void insert(TodoEntity todoEntity){
+    public void insertTodo(TodoEntity todoEntity){
         todoRepository.insert(todoEntity);
     }
 
-    public void update(TodoEntity todoEntity){
+    public void updateTodo(TodoEntity todoEntity){
         todoRepository.update(todoEntity);
     }
 
-    public void delete(TodoEntity todoEntity){
-        todoRepository.insert(todoEntity);
+    public void deleteTodo(TodoEntity todoEntity){
+        todoRepository.delete(todoEntity);
     }
 
-    public LiveData<List<TodoEntity>> getTodos(int catId){
-        todos = todoRepository.getCategoryTodos(catId);
-        return todos;
-    }
+    public LiveData<List<TodoEntity>> getTodos(long catId){ return todoRepository.getCategoryTodos(catId);}
 }

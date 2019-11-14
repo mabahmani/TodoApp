@@ -48,4 +48,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     annotationProcessor 'androidx.lifecycle:lifecycle-common-java8:2.1.0'
     implementation "androidx.navigation:navigation-fragment:2.1.0"
-    implementation "androidx.navigation:navigation-ui:2.1.0" }
+    implementation "androidx.navigation:navigation-ui:2.1.0"
+    implementation 'com.alirezaafkar:sundatepicker:2.1.2'
+
+}

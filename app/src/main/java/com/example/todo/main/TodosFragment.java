@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
 import com.example.todo.db.entity.TodoCategoryEntity;
+import com.example.todo.db.entity.TodoEntity;
 import com.example.todo.util.sharedprefenceslivedata.SharedPreferenceLongLiveData;
 import com.example.todo.viewmodel.TodoCategoryViewModel;
+import com.example.todo.viewmodel.TodoViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +41,8 @@ public class TodosFragment extends DaggerFragment {
 
     @Inject
     TodoCategoryViewModel todoCategoryViewModel;
-
+    @Inject
+    TodoViewModel todoViewModel;
     @Inject
     SharedPreferenceLongLiveData sharedPreferenceLongLiveData;
 
@@ -66,9 +69,18 @@ public class TodosFragment extends DaggerFragment {
                 activeCategory.observe(TodosFragment.this, new Observer<TodoCategoryEntity>() {
                     @Override
                     public void onChanged(TodoCategoryEntity todoCategoryEntity) {
-                        Log.d("aminSHred","changed "+ todoCategoryEntity.getCategoryName() );
                         listName.setText(todoCategoryEntity.getCategoryName());
                         activeCategory.removeObserver(this);
+                    }
+                });
+
+                todoViewModel.getTodos(aLong).observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
+                    @Override
+                    public void onChanged(List<TodoEntity> todoEntities) {
+
+                        for (TodoEntity t : todoEntities) {
+                            Log.d("aminTodoList", t.getTask());
+                        }
                     }
                 });
             }

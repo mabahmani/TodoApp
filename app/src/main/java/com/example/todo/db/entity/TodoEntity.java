@@ -9,7 +9,7 @@ import java.util.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(indices = {@Index(value = {"categoryId"}, unique = true)},
+@Entity(indices = {@Index(value = {"categoryId"})},
         foreignKeys = @ForeignKey(
                 entity = TodoCategoryEntity.class,
                 parentColumns = "id",
@@ -21,10 +21,9 @@ public class TodoEntity {
     private String task;
     private String subTask;
     private Date date;
-    private int categoryId;
+    private long categoryId;
 
-    public TodoEntity(int id, String task, String subTask, Date date, int categoryId) {
-        this.id = id;
+    public TodoEntity(String task, String subTask, Date date, long categoryId) {
         this.task = task;
         this.subTask = subTask;
         this.date = date;
@@ -63,11 +62,11 @@ public class TodoEntity {
         this.date = date;
     }
 
-    public int getCategoryId() {
+    public long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
     }
 }

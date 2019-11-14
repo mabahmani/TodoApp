@@ -35,7 +35,7 @@ public class TodoRepository {
         appExecutors.diskIO().execute(() -> todoDao.delete(todoEntity));
     }
 
-    public LiveData<List<TodoEntity>> getCategoryTodos(int catId){
+    public LiveData<List<TodoEntity>> getCategoryTodos(long catId){
         return todoDao.getCategoryTodos(catId);
     }
 }
