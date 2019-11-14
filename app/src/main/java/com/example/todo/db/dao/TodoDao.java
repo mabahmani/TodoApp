@@ -24,6 +24,6 @@ public interface TodoDao {
     @Delete
     void delete(TodoEntity todoEntity);
 
-    @Query("SELECT * FROM TodoEntity WHERE categoryId = :catId")
+    @Query("SELECT * FROM TodoEntity WHERE categoryId = :catId ORDER BY date ASC")
     LiveData<List<TodoEntity>> getCategoryTodos(long catId);
 }

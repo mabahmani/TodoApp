@@ -1,38 +1,15 @@
 package com.example.todo.main;
 
+import com.example.todo.db.entity.TodoEntity;
+
 import java.util.Date;
 
-public class TodoModel {
-    private String task;
-    private String subTask;
-    private Date dueDate;
+public class TodoModel extends TodoEntity {
     private boolean completed;
 
-    public TodoModel() {
-    }
 
-    public String getTask() {
-        return task;
-    }
-
-    public void setTask(String task) {
-        this.task = task;
-    }
-
-    public String getSubTask() {
-        return subTask;
-    }
-
-    public void setSubTask(String subTask) {
-        this.subTask = subTask;
-    }
-
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public TodoModel(String task, String subTask, Date date, long categoryId) {
+        super(task, subTask, date, categoryId);
     }
 
     public boolean isCompleted() {

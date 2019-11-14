@@ -115,6 +115,8 @@ public class AddTodoBottomSheerFragment extends BottomSheetDialogFragment implem
                     Log.d("aminCatID",todoEntity.getCategoryId() + "");
                     todoViewModel.insertTodo(todoEntity);
                 }
+
+                dismiss();
             }
         });
     }

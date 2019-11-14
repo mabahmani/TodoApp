@@ -21,10 +21,11 @@ import com.example.todo.util.sharedprefenceslivedata.SharedPreferenceLongLiveDat
 import com.example.todo.viewmodel.TodoCategoryViewModel;
 import com.example.todo.viewmodel.TodoViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -47,6 +48,8 @@ public class TodosFragment extends DaggerFragment {
     SharedPreferenceLongLiveData sharedPreferenceLongLiveData;
 
 
+    private TodoListAdapter todoListAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +61,9 @@ public class TodosFragment extends DaggerFragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this,view);
+
+        todoListRv.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         sharedPreferenceLongLiveData.observe(this, new Observer<Long>() {
             @Override
@@ -78,20 +84,46 @@ public class TodosFragment extends DaggerFragment {
                     @Override
                     public void onChanged(List<TodoEntity> todoEntities) {
 
-                        for (TodoEntity t : todoEntities) {
-                            Log.d("aminTodoList", t.getTask());
+                        List<TodoModel> todoModels = new ArrayList<>();
+
+                        if (!todoModels.isEmpty()) {
+                            Date initDate = todoEntities.get(0).getDate();
+                            DateModel dateModel = new DateModel(todoEntities.get(0).getTask(), todoEntities.get(0).getSubTask(), todoEntities.get(0).getDate(), todoEntities.get(0).getCategoryId());
+                            dateModel.setDueDate(initDate);
+                            todoModels.add(dateModel);
+
+                            for (TodoEntity t : todoEntities) {
+
+                                if (!isSameDay(initDate, t.getDate())) {
+                                    initDate = t.getDate();
+                                    dateModel = new DateModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
+                                    dateModel.setDueDate(initDate);
+                                    todoModels.add(dateModel);
+                                }
+
+                                TodoModel todoModel = new TodoModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
+                                todoModels.add(todoModel);
+
+                                todoListAdapter = new TodoListAdapter(getContext(), todoModels);
+                                todoListRv.setAdapter(todoListAdapter);
+                            }
                         }
                     }
                 });
             }
         });
 
-        initList();
     }
+
+    private boolean isSameDay(Date date1, Date date2){
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        return fmt.format(date1).equals(fmt.format(date2));
+    }
+
 
     private void initList() {
 
-        List<TodoModel> todoModels = new ArrayList<>();
+        /*List<TodoModel> todoModels = new ArrayList<>();
         List<TodoModel> completedList = new ArrayList<>();
 
         Date date = new Date();
@@ -111,7 +143,7 @@ public class TodosFragment extends DaggerFragment {
                 todoModels.add(dateModel);
             }
 
-            todoModel.setDueDate(date);
+            todoModel.setDate(date);
             todoModels.add(todoModel);
         }
 
@@ -122,11 +154,7 @@ public class TodosFragment extends DaggerFragment {
             completedList.add(todoModel);
         }
         completedTodoModel.setCompletedList(completedList);
-        todoModels.add(completedTodoModel);
-
-        TodoListAdapter todoListAdapter = new TodoListAdapter(getContext(), todoModels);
-        todoListRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        todoListRv.setAdapter(todoListAdapter);
+        todoModels.add(completedTodoModel);*/
     }
 
 }

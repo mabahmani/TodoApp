@@ -6,12 +6,14 @@ public class DateModel extends TodoModel {
 
     private Date dueDate;
 
-    @Override
+    public DateModel(String task, String subTask, Date date, long categoryId) {
+        super(task, subTask, date, categoryId);
+    }
+
     public Date getDueDate() {
         return dueDate;
     }
 
-    @Override
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }

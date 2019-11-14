@@ -19,10 +19,6 @@ import com.example.todo.viewmodel.TodoCategoryViewModel;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -75,12 +71,6 @@ public class TodosActivity extends DaggerAppCompatActivity {
         transaction.replace(R.id.main_todo_frameLayout,new TodosFragment());
         transaction.commit();
 
-    }
-
-
-    private boolean isSameDay(Date date1, Date date2){
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.US);
-        return fmt.format(date1).equals(fmt.format(date2));
     }
 
     @Override
