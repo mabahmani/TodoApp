@@ -80,13 +80,14 @@ public class TodosFragment extends DaggerFragment {
                     }
                 });
 
-                todoViewModel.getTodos(aLong).observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
+                LiveData<List<TodoEntity>> todosLiveList = todoViewModel.getTodos(aLong);
+
+                todosLiveList.observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
                     @Override
                     public void onChanged(List<TodoEntity> todoEntities) {
-
                         List<TodoModel> todoModels = new ArrayList<>();
 
-                        if (!todoModels.isEmpty()) {
+                        if (!todoEntities.isEmpty()) {
                             Date initDate = todoEntities.get(0).getDate();
                             DateModel dateModel = new DateModel(todoEntities.get(0).getTask(), todoEntities.get(0).getSubTask(), todoEntities.get(0).getDate(), todoEntities.get(0).getCategoryId());
                             dateModel.setDueDate(initDate);
@@ -104,10 +105,13 @@ public class TodosFragment extends DaggerFragment {
                                 TodoModel todoModel = new TodoModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
                                 todoModels.add(todoModel);
 
-                                todoListAdapter = new TodoListAdapter(getContext(), todoModels);
-                                todoListRv.setAdapter(todoListAdapter);
                             }
                         }
+
+                        todoListAdapter = new TodoListAdapter(getContext(), todoModels);
+                        todoListRv.setAdapter(todoListAdapter);
+
+                        todosLiveList.removeObserver(this);
                     }
                 });
             }

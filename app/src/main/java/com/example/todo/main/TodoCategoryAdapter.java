@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todo.MainApplication;
 import com.example.todo.R;
 import com.example.todo.db.entity.TodoCategoryEntity;
+import com.example.todo.listeners.OnItemClickListener;
 import com.example.todo.util.SharedConstants;
 
 import java.util.ArrayList;
@@ -25,10 +26,12 @@ public class TodoCategoryAdapter extends RecyclerView.Adapter<TodoCategoryAdapte
 
     private List<TodoCategoryEntity> todoCategoryList;
     private SharedPreferences sharedPreferences;
+    private OnItemClickListener itemClickListener;
 
-    public TodoCategoryAdapter() {
+    public TodoCategoryAdapter(OnItemClickListener onItemClickListener) {
         this.todoCategoryList = new ArrayList<>();
         this.sharedPreferences = MainApplication.getSharedPreferences();
+        this.itemClickListener = onItemClickListener;
     }
 
     public void setTodoCategoryList(List<TodoCategoryEntity> todoCategoryList) {
@@ -46,6 +49,7 @@ public class TodoCategoryAdapter extends RecyclerView.Adapter<TodoCategoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(todoCategoryList.get(position),itemClickListener);
 
         if (sharedPreferences.getLong(SharedConstants.ACTIVE_CATEGORY,-1) == todoCategoryList.get(position).getId()){
             holder.parent.setBackgroundResource(R.color.colorActiveCategory);
@@ -69,6 +73,10 @@ public class TodoCategoryAdapter extends RecyclerView.Adapter<TodoCategoryAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+        }
+
+        public void bind(TodoCategoryEntity todoCategoryEntity, OnItemClickListener itemClickListener){
+            itemView.setOnClickListener(view -> itemClickListener.onItemClick(todoCategoryEntity));
         }
     }
 }
