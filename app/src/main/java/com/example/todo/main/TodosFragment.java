@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,7 +49,6 @@ public class TodosFragment extends DaggerFragment {
 
 
     private TodoListAdapter todoListAdapter;
-    private MutableLiveData<Long> catId;
 
     @Nullable
     @Override
@@ -63,9 +61,6 @@ public class TodosFragment extends DaggerFragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this,view);
-
-        catId = new MutableLiveData<>();
-
         todoListRv.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
@@ -80,62 +75,56 @@ public class TodosFragment extends DaggerFragment {
                     @Override
                     public void onChanged(TodoCategoryEntity todoCategoryEntity) {
                         listName.setText(todoCategoryEntity.getCategoryName());
-                        catId.setValue(aLong);
+
+
+                        todoViewModel.getTodos(aLong).observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
+                            @Override
+                            public void onChanged(List<TodoEntity> todoEntities) {
+                                List<TodoEntity> todoModels = new ArrayList<>();
+                                List<TodoEntity> completedTodoModels = new ArrayList<>();
+                                CompletedTodoModel completedTodoModel = new CompletedTodoModel("","",new Date(),-1);
+
+                                if (!todoEntities.isEmpty()) {
+                                    Date initDate = todoEntities.get(0).getDate();
+                                    DateModel dateModel = new DateModel(todoEntities.get(0).getTask(), todoEntities.get(0).getSubTask(), todoEntities.get(0).getDate(), todoEntities.get(0).getCategoryId());
+                                    dateModel.setDueDate(initDate);
+                                    if (!todoEntities.get(0).isCompleted())
+                                        todoModels.add(dateModel);
+
+                                    for (TodoEntity t : todoEntities) {
+
+                                        if (t.isCompleted()){
+                                            completedTodoModels.add(t);
+                                        }
+
+                                        else {
+                                            if (!isSameDay(initDate, t.getDate())) {
+                                                initDate = t.getDate();
+                                                dateModel = new DateModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
+                                                dateModel.setDueDate(initDate);
+                                                todoModels.add(dateModel);
+                                            }
+
+                                            todoModels.add(t);
+                                        }
+                                    }
+
+                                    completedTodoModel.setCompletedList(completedTodoModels);
+                                    if (!completedTodoModels.isEmpty())
+                                        todoModels.add(completedTodoModel);
+                                }
+
+                                todoListAdapter = new TodoListAdapter(getContext(), todoModels, todoViewModel);
+                                todoListRv.setAdapter(todoListAdapter);
+                            }
+                        });
+
                         activeCategory.removeObserver(this);
                     }
                 });
 
             }
         });
-
-        catId.observe(TodosFragment.this, new Observer<Long>() {
-            @Override
-            public void onChanged(Long aLong) {
-                todoViewModel.getTodos(aLong).observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
-                    @Override
-                    public void onChanged(List<TodoEntity> todoEntities) {
-                        List<TodoEntity> todoModels = new ArrayList<>();
-                        List<TodoEntity> completedTodoModels = new ArrayList<>();
-                        CompletedTodoModel completedTodoModel = new CompletedTodoModel("","",new Date(),-1);
-
-                        if (!todoEntities.isEmpty()) {
-                            Date initDate = todoEntities.get(0).getDate();
-                            DateModel dateModel = new DateModel(todoEntities.get(0).getTask(), todoEntities.get(0).getSubTask(), todoEntities.get(0).getDate(), todoEntities.get(0).getCategoryId());
-                            dateModel.setDueDate(initDate);
-                            if (!todoEntities.get(0).isCompleted())
-                                todoModels.add(dateModel);
-
-                            for (TodoEntity t : todoEntities) {
-
-                                if (t.isCompleted()){
-                                    completedTodoModels.add(t);
-                                }
-
-                                else {
-                                    if (!isSameDay(initDate, t.getDate())) {
-                                        initDate = t.getDate();
-                                        dateModel = new DateModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
-                                        dateModel.setDueDate(initDate);
-                                        todoModels.add(dateModel);
-                                    }
-
-                                    todoModels.add(t);
-                                }
-                            }
-
-                            completedTodoModel.setCompletedList(completedTodoModels);
-                            if (!completedTodoModels.isEmpty())
-                                todoModels.add(completedTodoModel);
-                        }
-
-                        todoListAdapter = new TodoListAdapter(getContext(), todoModels, todoViewModel);
-                        todoListRv.setAdapter(todoListAdapter);
-                        todoListAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
-
 
 
     }
