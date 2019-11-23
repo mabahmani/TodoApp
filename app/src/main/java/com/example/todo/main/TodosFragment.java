@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +50,7 @@ public class TodosFragment extends DaggerFragment {
 
 
     private TodoListAdapter todoListAdapter;
+    private MutableLiveData<Long> catId;
 
     @Nullable
     @Override
@@ -61,6 +63,8 @@ public class TodosFragment extends DaggerFragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this,view);
+
+        catId = new MutableLiveData<>();
 
         todoListRv.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -76,13 +80,18 @@ public class TodosFragment extends DaggerFragment {
                     @Override
                     public void onChanged(TodoCategoryEntity todoCategoryEntity) {
                         listName.setText(todoCategoryEntity.getCategoryName());
+                        catId.setValue(aLong);
                         activeCategory.removeObserver(this);
                     }
                 });
 
-                LiveData<List<TodoEntity>> todosLiveList = todoViewModel.getTodos(aLong);
+            }
+        });
 
-                todosLiveList.observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
+        catId.observe(TodosFragment.this, new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                todoViewModel.getTodos(aLong).observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
                     @Override
                     public void onChanged(List<TodoEntity> todoEntities) {
                         List<TodoModel> todoModels = new ArrayList<>();
@@ -110,55 +119,19 @@ public class TodosFragment extends DaggerFragment {
 
                         todoListAdapter = new TodoListAdapter(getContext(), todoModels);
                         todoListRv.setAdapter(todoListAdapter);
-
-                        todosLiveList.removeObserver(this);
+                        todoListAdapter.notifyDataSetChanged();
                     }
                 });
             }
         });
+
+
 
     }
 
     private boolean isSameDay(Date date1, Date date2){
         SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.US);
         return fmt.format(date1).equals(fmt.format(date2));
-    }
-
-
-    private void initList() {
-
-        /*List<TodoModel> todoModels = new ArrayList<>();
-        List<TodoModel> completedList = new ArrayList<>();
-
-        Date date = new Date();
-
-        for (int i=0; i<20; i++){
-            TodoModel todoModel = new TodoModel();
-            todoModel.setTask("Task " + i);
-            todoModel.setSubTask("SubTask " + i);
-            Calendar calendar = Calendar.getInstance();
-            if (i%6==0){
-                calendar.setTime(date);
-                calendar.add(Calendar.DAY_OF_YEAR, i);
-                date = calendar.getTime();
-
-                DateModel dateModel = new DateModel();
-                dateModel.setDueDate(date);
-                todoModels.add(dateModel);
-            }
-
-            todoModel.setDate(date);
-            todoModels.add(todoModel);
-        }
-
-        CompletedTodoModel completedTodoModel = new CompletedTodoModel();
-        for (int i=0; i<10; i++){
-            TodoModel todoModel = new TodoModel();
-            todoModel.setTask("Completed task " + i);
-            completedList.add(todoModel);
-        }
-        completedTodoModel.setCompletedList(completedList);
-        todoModels.add(completedTodoModel);*/
     }
 
 }

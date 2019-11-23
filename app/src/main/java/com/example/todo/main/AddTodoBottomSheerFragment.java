@@ -75,6 +75,8 @@ public class AddTodoBottomSheerFragment extends BottomSheetDialogFragment implem
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        addTodoTitle.setText("");
+        addTodoDetails.setText("");
         addTodoTitle.requestFocus();
 
         todoDate = new Date();
@@ -124,5 +126,12 @@ public class AddTodoBottomSheerFragment extends BottomSheetDialogFragment implem
     @Override
     public void onDateSet(int id, @Nullable Calendar calendar, int day, int month, int year) {
         todoDate = Objects.requireNonNull(calendar).getTime();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        addTodoTitle.setText("");
+        addTodoDetails.setText("");
     }
 }
