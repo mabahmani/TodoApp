@@ -1,11 +1,13 @@
 package com.example.todo.main;
 
+import com.example.todo.db.entity.TodoEntity;
+
 import java.util.Date;
 import java.util.List;
 
-public class CompletedTodoModel extends TodoModel {
+public class CompletedTodoModel extends TodoEntity {
 
-    private List<TodoModel> completedList;
+    private List<TodoEntity> completedList;
     private boolean expanded;
 
     public CompletedTodoModel(String task, String subTask, Date date, long categoryId) {
@@ -23,11 +25,11 @@ public class CompletedTodoModel extends TodoModel {
         this.expanded = expanded;
     }
 
-    public List<TodoModel> getCompletedList() {
+    public List<TodoEntity> getCompletedList() {
         return completedList;
     }
 
-    public void setCompletedList(List<TodoModel> completedList) {
+    public void setCompletedList(List<TodoEntity> completedList) {
         this.completedList = completedList;
     }
 }

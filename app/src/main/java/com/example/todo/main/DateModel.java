@@ -1,8 +1,10 @@
 package com.example.todo.main;
 
+import com.example.todo.db.entity.TodoEntity;
+
 import java.util.Date;
 
-public class DateModel extends TodoModel {
+public class DateModel extends TodoEntity {
 
     private Date dueDate;
 

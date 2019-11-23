@@ -94,30 +94,41 @@ public class TodosFragment extends DaggerFragment {
                 todoViewModel.getTodos(aLong).observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
                     @Override
                     public void onChanged(List<TodoEntity> todoEntities) {
-                        List<TodoModel> todoModels = new ArrayList<>();
+                        List<TodoEntity> todoModels = new ArrayList<>();
+                        List<TodoEntity> completedTodoModels = new ArrayList<>();
+                        CompletedTodoModel completedTodoModel = new CompletedTodoModel("","",new Date(),-1);
 
                         if (!todoEntities.isEmpty()) {
                             Date initDate = todoEntities.get(0).getDate();
                             DateModel dateModel = new DateModel(todoEntities.get(0).getTask(), todoEntities.get(0).getSubTask(), todoEntities.get(0).getDate(), todoEntities.get(0).getCategoryId());
                             dateModel.setDueDate(initDate);
-                            todoModels.add(dateModel);
+                            if (!todoEntities.get(0).isCompleted())
+                                todoModels.add(dateModel);
 
                             for (TodoEntity t : todoEntities) {
 
-                                if (!isSameDay(initDate, t.getDate())) {
-                                    initDate = t.getDate();
-                                    dateModel = new DateModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
-                                    dateModel.setDueDate(initDate);
-                                    todoModels.add(dateModel);
+                                if (t.isCompleted()){
+                                    completedTodoModels.add(t);
                                 }
 
-                                TodoModel todoModel = new TodoModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
-                                todoModels.add(todoModel);
+                                else {
+                                    if (!isSameDay(initDate, t.getDate())) {
+                                        initDate = t.getDate();
+                                        dateModel = new DateModel(t.getTask(), t.getSubTask(), t.getDate(), t.getCategoryId());
+                                        dateModel.setDueDate(initDate);
+                                        todoModels.add(dateModel);
+                                    }
 
+                                    todoModels.add(t);
+                                }
                             }
+
+                            completedTodoModel.setCompletedList(completedTodoModels);
+                            if (!completedTodoModels.isEmpty())
+                                todoModels.add(completedTodoModel);
                         }
 
-                        todoListAdapter = new TodoListAdapter(getContext(), todoModels);
+                        todoListAdapter = new TodoListAdapter(getContext(), todoModels, todoViewModel);
                         todoListRv.setAdapter(todoListAdapter);
                         todoListAdapter.notifyDataSetChanged();
                     }

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
+import com.example.todo.db.entity.TodoEntity;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ import butterknife.ButterKnife;
 
 public class CompletedTodoListAdapter extends RecyclerView.Adapter<CompletedTodoListAdapter.ViewHolder> {
 
-    private List<TodoModel> completedList;
+    private List<TodoEntity> completedList;
 
-    public CompletedTodoListAdapter(List<TodoModel> completedList) {
+    public CompletedTodoListAdapter(List<TodoEntity> completedList) {
         this.completedList = completedList;
     }
 

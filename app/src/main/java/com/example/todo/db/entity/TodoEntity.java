@@ -22,12 +22,14 @@ public class TodoEntity {
     private String subTask;
     private Date date;
     private long categoryId;
+    private boolean completed;
 
     public TodoEntity(String task, String subTask, Date date, long categoryId) {
         this.task = task;
         this.subTask = subTask;
         this.date = date;
         this.categoryId = categoryId;
+        this.completed = false;
     }
 
     public int getId() {
@@ -68,5 +70,13 @@ public class TodoEntity {
 
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

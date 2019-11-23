@@ -1,9 +1,7 @@
 package com.example.todo.main;
 
 import android.content.Context;
-import android.icu.util.ULocale;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.R;
+import com.example.todo.db.entity.TodoEntity;
 import com.example.todo.util.FaDigitsConverter;
+import com.example.todo.viewmodel.TodoViewModel;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,11 +34,13 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_COMPLETED = 2;
     private Context context;
-    private List<TodoModel> todoModelList;
+    private List<TodoEntity> todoModelList;
+    private TodoViewModel todoViewModel;
 
-    public TodoListAdapter(Context context, List<TodoModel> todoModelList) {
+    public TodoListAdapter(Context context, List<TodoEntity> todoModelList, TodoViewModel todoViewModel) {
         this.context = context;
         this.todoModelList = todoModelList;
+        this.todoViewModel = todoViewModel;
     }
 
     @NonNull
@@ -90,7 +90,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holderItem.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+                        todoModelList.get(position).setCompleted(true);
+                        todoViewModel.updateTodo(todoModelList.get(position));
                     }
                 });
             }
