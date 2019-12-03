@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -104,6 +105,14 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holderCompleted.todoCompletedRv.setAdapter(completedTodoListAdapter);
                 holderCompleted.todoCompletedRv.setVisibility(completedTodoModel.isExpanded() ? View.VISIBLE : View.GONE);
 
+                if (completedTodoModel.isExpanded()){
+                    holderCompleted.expoandIcon.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                }
+
+                else {
+                    holderCompleted.expoandIcon.setImageResource(R.drawable.ic_expand_more_black_24dp);
+                }
+
                 holderCompleted.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -160,6 +169,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         LinearLayout parent;
         @BindView(R.id.parent)
         ConstraintLayout mainParent;
+        @BindView(R.id.expand_icon)
+        AppCompatImageView expoandIcon;
 
         public ViewHolderCompleted(@NonNull View itemView) {
             super(itemView);

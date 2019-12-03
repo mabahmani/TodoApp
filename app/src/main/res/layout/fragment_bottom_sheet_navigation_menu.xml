@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
-                    android:text="aminbahmani10@gmail.com"
+                    android:text="example@gmail.com"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/user_avatar" />
 
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
-                    android:text="محمدامین بهمنی"
+                    android:text="نام کاربری"
                     android:textColor="@color/colorAccent"
                     app:layout_constraintRight_toLeftOf="@+id/user_avatar"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -74,7 +74,8 @@ public class TodosFragment extends DaggerFragment {
                 activeCategory.observe(TodosFragment.this, new Observer<TodoCategoryEntity>() {
                     @Override
                     public void onChanged(TodoCategoryEntity todoCategoryEntity) {
-                        listName.setText(todoCategoryEntity.getCategoryName());
+                        if(todoCategoryEntity != null)
+                            listName.setText(todoCategoryEntity.getCategoryName());
 
 
                         todoViewModel.getTodos(aLong).observe(TodosFragment.this, new Observer<List<TodoEntity>>() {
