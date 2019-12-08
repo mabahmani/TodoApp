@@ -10,12 +10,12 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import io.github.inflationx.viewpump.ViewPump;
 
 public class MainApplication extends DaggerApplication {
 
     @Inject
-    CalligraphyConfig calligraphyConfig;
+    ViewPump calligraphyConfig;
     @Inject
     TodoCategoryEntity initialTodoCategory;
     @Inject
@@ -31,8 +31,7 @@ public class MainApplication extends DaggerApplication {
 
         sp = sharedPreferences;
 
-        CalligraphyConfig.initDefault(calligraphyConfig);
-
+        ViewPump.init(calligraphyConfig);
     }
 
     @Override

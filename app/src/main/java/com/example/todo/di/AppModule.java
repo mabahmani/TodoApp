@@ -16,7 +16,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
+import io.github.inflationx.viewpump.ViewPump;
 
 @Module
 public class AppModule {
@@ -31,10 +33,13 @@ public class AppModule {
 
     @Singleton
     @Provides
-    CalligraphyConfig provideCalligraphyConfig() {
-        return new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/IRANSansMobile.ttf")
-                .setFontAttrId(R.attr.fontPath)
+    ViewPump provideCalligraphyConfig() {
+        return ViewPump.builder()
+                .addInterceptor(new CalligraphyInterceptor(
+                        new CalligraphyConfig.Builder()
+                                .setDefaultFontPath("fonts/IRANSansMobile.ttf")
+                                .setFontAttrId(R.attr.fontPath)
+                                .build()))
                 .build();
     }
 
